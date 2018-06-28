@@ -1,1 +1,1 @@
-# C-Piscine
+# C++ Piscine
