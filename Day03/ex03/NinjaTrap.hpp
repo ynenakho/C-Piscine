@@ -10,6 +10,7 @@ public:
   NinjaTrap(std::string name = "Default");
   ~NinjaTrap();
   NinjaTrap(NinjaTrap const &src);
+  NinjaTrap &operator=(const NinjaTrap &obj);
   void ninjaShoebox(NinjaTrap const & obj);
   void ninjaShoebox(ScavTrap const & obj);
   void ninjaShoebox(FragTrap const & obj);

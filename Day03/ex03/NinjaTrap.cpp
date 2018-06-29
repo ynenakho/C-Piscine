@@ -39,3 +39,18 @@ NinjaTrap::NinjaTrap(NinjaTrap const &src) {
   *this = src;
   return;
 }
+
+NinjaTrap &NinjaTrap::operator= (const NinjaTrap &obj)
+{
+  this->name = obj.name;
+  this->type = obj.type;
+  this->hitPoints = obj.hitPoints;
+  this->maxHitPoints = obj.maxHitPoints;
+  this->energyPoints = obj.energyPoints;
+  this->maxEnergyPoints = obj.maxEnergyPoints;
+  this->level = obj.level;
+  this->meleeAttackDmg = obj.meleeAttackDmg;
+  this->rangedAttackDmg = obj.rangedAttackDmg;
+  this->armorDmgReduction = obj.armorDmgReduction;
+	return (*this);
+}

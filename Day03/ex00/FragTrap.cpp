@@ -5,7 +5,6 @@ void FragTrap::vaulthunter_dot_exe(std::string const & target) {
     std::cout << "FR4G-TP " << this->name << " doesnt have enougth energy." << std::endl;
     return;
   }
-  srand(time(NULL));
   this->energyPoints -= 25;
   std::string attackArray[5] = {
     "Hammer",
@@ -79,6 +78,8 @@ FragTrap::~FragTrap() {
 }
 
 FragTrap::FragTrap(std::string name) : name(name) {
+  srand(time(NULL));
+  this->type = "FR4G-TP ";
   this->hitPoints = 100;
   this->maxHitPoints = 100;
   this->energyPoints = 100;
@@ -94,5 +95,32 @@ FragTrap::FragTrap(std::string name) : name(name) {
 FragTrap::FragTrap(FragTrap const &src) {
   std::cout << "Copy constructor called" << std::endl;
   *this = src;
+  return;
+}
+
+FragTrap &FragTrap::operator= (const FragTrap &obj)
+{
+  this->name = obj.name;
+  this->type = obj.type;
+  this->hitPoints = obj.hitPoints;
+  this->maxHitPoints = obj.maxHitPoints;
+  this->energyPoints = obj.energyPoints;
+  this->maxEnergyPoints = obj.maxEnergyPoints;
+  this->level = obj.level;
+  this->meleeAttackDmg = obj.meleeAttackDmg;
+  this->rangedAttackDmg = obj.rangedAttackDmg;
+  this->armorDmgReduction = obj.armorDmgReduction;
+	return (*this);
+}
+
+void FragTrap::stats() {
+  std::cout  << "\033[1;32mName: " << this->name << std::endl;
+  std::cout << "Type: " << this->type << std::endl;
+  std::cout << "Hit Points: " << this->hitPoints << " out of " << this->maxHitPoints << std::endl;
+  std::cout << "Energy Points: " << this->energyPoints << " out of " << this->maxEnergyPoints << std::endl;
+  std::cout << "Level: " << this->level << std::endl;
+  std::cout << "Melee Dmg: " << this->meleeAttackDmg << std::endl;
+  std::cout << "Ranged Dmg: " << this->rangedAttackDmg << std::endl;
+  std::cout << "Armor Reduction: " << this->armorDmgReduction << "\033[0m" << std::endl;
   return;
 }

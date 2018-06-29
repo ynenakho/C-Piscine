@@ -80,6 +80,7 @@ ScavTrap::~ScavTrap() {
 
 ScavTrap::ScavTrap(std::string name) : name(name) {
   srand(time(NULL));
+  this->type = "CL4P-TP ";
   this->hitPoints = 100;
   this->maxHitPoints = 100;
   this->energyPoints = 50;
@@ -95,5 +96,32 @@ ScavTrap::ScavTrap(std::string name) : name(name) {
 ScavTrap::ScavTrap(ScavTrap const &src) {
   std::cout << "Copy constructor called" << std::endl;
   *this = src;
+  return;
+}
+
+ScavTrap &ScavTrap::operator= (const ScavTrap &obj)
+{
+  this->name = obj.name;
+  this->type = obj.type;
+  this->hitPoints = obj.hitPoints;
+  this->maxHitPoints = obj.maxHitPoints;
+  this->energyPoints = obj.energyPoints;
+  this->maxEnergyPoints = obj.maxEnergyPoints;
+  this->level = obj.level;
+  this->meleeAttackDmg = obj.meleeAttackDmg;
+  this->rangedAttackDmg = obj.rangedAttackDmg;
+  this->armorDmgReduction = obj.armorDmgReduction;
+	return (*this);
+}
+
+void ScavTrap::stats() {
+  std::cout  << "\033[1;32mName: " << this->name << std::endl;
+  std::cout << "Type: " << this->type << std::endl;
+  std::cout << "Hit Points: " << this->hitPoints << " out of " << this->maxHitPoints << std::endl;
+  std::cout << "Energy Points: " << this->energyPoints << " out of " << this->maxEnergyPoints << std::endl;
+  std::cout << "Level: " << this->level << std::endl;
+  std::cout << "Melee Dmg: " << this->meleeAttackDmg << std::endl;
+  std::cout << "Ranged Dmg: " << this->rangedAttackDmg << std::endl;
+  std::cout << "Armor Reduction: " << this->armorDmgReduction << "\033[0m" << std::endl;
   return;
 }

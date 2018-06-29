@@ -8,6 +8,7 @@ public:
   FragTrap(std::string name = "Default");
   ~FragTrap();
   FragTrap(FragTrap const &src);
+  FragTrap &operator= (const FragTrap &obj);
   void vaulthunter_dot_exe(std::string const & target);
 };
 
