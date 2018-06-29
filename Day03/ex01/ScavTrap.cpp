@@ -79,7 +79,7 @@ ScavTrap::~ScavTrap() {
 }
 
 ScavTrap::ScavTrap(std::string name) : name(name) {
-      srand(time(NULL));
+  srand(time(NULL));
   this->hitPoints = 100;
   this->maxHitPoints = 100;
   this->energyPoints = 50;
@@ -89,5 +89,11 @@ ScavTrap::ScavTrap(std::string name) : name(name) {
   this->rangedAttackDmg = 13;
   this->armorDmgReduction = 3;
   std::cout << "CL4P-TP named " << this->name << " created." << std::endl;
+  return;
+}
+
+ScavTrap::ScavTrap(ScavTrap const &src) {
+  std::cout << "Copy constructor called" << std::endl;
+  *this = src;
   return;
 }

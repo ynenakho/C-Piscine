@@ -91,3 +91,9 @@ FragTrap::FragTrap(std::string name) : name(name) {
   std::cout << "FR4G-TP named " << this->name << " created." << std::endl;
   return;
 }
+
+FragTrap::FragTrap(FragTrap const &src) {
+  std::cout << "Copy constructor called" << std::endl;
+  *this = src;
+  return;
+}
