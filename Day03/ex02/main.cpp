@@ -15,6 +15,7 @@ int main() {
   warrior1.vaulthunter_dot_exe("Max");
   warrior1.vaulthunter_dot_exe("Max");
   warrior1.vaulthunter_dot_exe("Max");
+  warrior2.stats();
   warrior2.rangedAttack("Dug");
   warrior2.meleeAttack("Dug");
   warrior2.takeDamage(50);
@@ -26,8 +27,11 @@ int main() {
   warrior2.challengeNewcomer("Gremlin");
   warrior2.challengeNewcomer("Gremlin");
   warrior2.challengeNewcomer("Gremlin");
+  warrior2.stats();
   ScavTrap warrior3("Anton");
+  warrior3.stats();
   warrior3.challengeNewcomer("Gremlin");
   warrior3.challengeNewcomer("Gremlin");
+  warrior3.stats();
   return 0;
 }

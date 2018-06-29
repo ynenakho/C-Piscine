@@ -11,6 +11,7 @@ public:
   void meleeAttack(std::string const & target);
   void takeDamage(unsigned int amount);
   void beRepaired(unsigned int amount);
+  void stats();
 
 protected:
   int hitPoints;
@@ -23,7 +24,7 @@ protected:
   int rangedAttackDmg;
   int armorDmgReduction;
   std::string type;
-  
+
 };
 
 #endif

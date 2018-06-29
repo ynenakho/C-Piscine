@@ -2,6 +2,17 @@
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
 
+void ClapTrap::stats() {
+  std::cout << "Name: " << this->name << std::endl;
+  std::cout << "Type: " << this->type << std::endl;
+  std::cout << "Hit Points: " << this->hitPoints << " out of " << this->maxHitPoints << std::endl;
+  std::cout << "Energy Points: " << this->energyPoints << " out of " << this->maxEnergyPoints << std::endl;
+  std::cout << "Level: " << this->level << std::endl;
+  std::cout << "Melee Dmg: " << this->meleeAttackDmg << std::endl;
+  std::cout << "Ranged Dmg: " << this->rangedAttackDmg << std::endl;
+  return;
+}
+
 std::string ClapTrap::getName() const {
   return this->name;
 }

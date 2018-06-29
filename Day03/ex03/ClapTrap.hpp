@@ -13,6 +13,7 @@ public:
   void beRepaired(unsigned int amount);
   std::string getName() const;
   std::string getType() const;
+  void stats();
 
 
 protected:
