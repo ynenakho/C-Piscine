@@ -1,12 +1,12 @@
 #include "Fixed.hpp"
 
 Fixed::Fixed(const float fnum) {
-  this->fixedValue = std::round(fnum * std::pow(2, this->numOfBits));
+  this->fixedValue = std::round(fnum * (1 << this->numOfBits));
   std::cout << "Float constructor called" << std::endl;
 }
 
 Fixed::Fixed(const int num) {
-  this->fixedValue = num * std::pow(2, this->numOfBits);
+  this->fixedValue = num * (1 << this->numOfBits);
   std::cout << "Int constructor called" << std::endl;
 }
 
@@ -43,11 +43,11 @@ void Fixed::setRawBits( int const raw ) {
 }
 
 float Fixed::toFloat( void ) const {
-  return (float)this->fixedValue / std::pow(2, this->numOfBits);
+  return (float)this->fixedValue / (1 << this->numOfBits);
 }
 
  int Fixed::toInt( void ) const {
-   return (int)this->fixedValue / std::pow(2, this->numOfBits);
+   return (int)this->fixedValue / (1 << this->numOfBits);
  }
 
 std::ostream &operator<<(std::ostream &res, Fixed const &val) {
