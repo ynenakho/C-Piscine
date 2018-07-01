@@ -1,6 +1,19 @@
 #include "Player.hpp"
 #include "Game.hpp"
 
+void Player::kill() {
+	this->dead = true;
+}
+
+void Player::reset() {
+	this->newLoc();
+	this->dead = false;
+}
+
+bool Player::isDead() {
+	return this->dead;
+}
+
 void Player::drawBullets()
 {
 	for (int i = 0; i < 20; i++)
@@ -41,7 +54,7 @@ Player::Player() {
 }
 
 void Player::moveUp() {
-  this->yLoc = (this->yLoc == 20) ? 20 : this->yLoc - 1;
+  this->yLoc = (this->yLoc == this->yMax / 2) ? this->yMax / 2 : this->yLoc - 1;
 }
 
 void Player::moveDown() {

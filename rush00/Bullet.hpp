@@ -12,6 +12,7 @@ class Bullet {
     bool getDisplay();
     void draw();
     void show();
+
     int getYLoc();
     int getXLoc();
 

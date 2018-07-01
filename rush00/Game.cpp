@@ -1,6 +1,18 @@
 #include "Game.hpp"
 #include "Enemy.hpp"
 
+void Game::reset() {
+	getmaxyx(stdscr, this->yMax, this->xMax);
+	this->finished = false;
+	this->time = 0;
+	this->spawnTimer = 0;
+	this->enemies = new Enemy*[20];
+	this->score = 0;
+	this->lifes = 1;
+	 for (int i = 0; i < 20; i++)
+		 this->enemies[i] = new Enemy;
+}
+
 void Game::drawObjects() {
 	this->player.drawBullets();
   for (int i = 0; i < 10; i++) {
@@ -22,7 +34,7 @@ Game::Game() {
 	this->spawnTimer = 0;
   this->enemies = new Enemy*[20];
   this->score = 0;
-  this->lifes = 3;
+  this->lifes = 1;
    for (int i = 0; i < 20; i++)
      this->enemies[i] = new Enemy;
 }
@@ -59,6 +71,7 @@ void Game::checkEnemyCollision() {
       this->player.newLoc();
       if (--this->lifes == 0) {
         this->finished = true;
+				this->player.kill();
       }
 
     }
@@ -73,6 +86,7 @@ void Game::checkEnemy(Enemy &e) {
     this->player.newLoc();
     if (--this->lifes == 0) {
       this->finished = true;
+			this->player.kill();
     }
     e.hide();
   }
@@ -104,7 +118,7 @@ void Game::draw() {
 
 	mvprintw(this->yMax - 1, 1, "TIME: %0.2d:%0.2d", this->time / 60, this->time%60);
 	mvprintw(this->yMax - 1, 15, "SCORE: %d", this->score);
-	mvprintw(this->yMax - 1, 26, "LIVES: %d", this->lifes);
+	mvprintw(this->yMax - 1, 28, "LIVES: %d", this->lifes);
 
   this->player.display();
   this->moveObjects();
@@ -133,7 +147,7 @@ void Game::start()
 	clock_t before = clock();
 	clock_t now;
   keypad(stdscr, true);
-	while (!this->finished)
+	while (!this->player.isDead())
 	{
 		if ((c = getch()) != ERR)
 			this->handleKey(c);
@@ -146,47 +160,54 @@ void Game::start()
 			this->spawnTimer++;
 			before = now;
     }
+		if (this->player.isDead()) {
+			nodelay(stdscr, false);
+			clear();
+			box(stdscr, 0, 0);
+			mvprintw(this->yMax / 2 - 4, this->xMax / 2 - 7, "GAME OVER!!!!");
+			mvprintw(this->yMax / 2 - 2, this->xMax / 2 - 10, "Your score is: %d", this->score);
+			mvprintw(this->yMax / 2, this->xMax / 2 - 5, "New Game?", this->score);
+			mvprintw(this->yMax / 2 + 2, this->xMax / 2 - 9, "[ Y ]  or  [ N ]");
+			refresh();
+			while ((c = getch()) != 'y' && (c != 'n')) {}
+			if (c == 'y') {
+				this->reset();
+				this->player.reset();
+				nodelay(stdscr, true);
+			}
+			else if (c == 'n' || c == '`')
+				exit(0);
+
+		}
+
 	// 	// WAIT FOR REST OF 1/60th OF SECOND (or 1/fps'th of a second)
     while(clock() * 60 / CLOCKS_PER_SEC == now * 60 / CLOCKS_PER_SEC) {}
 	  }
 }
 
-
-
 void    Game::handleKey(int c) {
 	switch(c) {
 		case KEY_LEFT:
-	//		if (!player.isDead()) {
 				this->player.moveLeft();
-
 				this->checkEnemyCollision();
-	//	}
-			break;
+				break;
 		case KEY_RIGHT:
-	//		if (!player.isDead()) {
 				this->player.moveRight();
 				this->checkEnemyCollision();
-	//		}
 			break;
 		case KEY_UP:
-	//		if (!player.isDead()) {
 				this->player.moveUp();
 				this->checkEnemyCollision();
-	//		}
 			break;
 		case KEY_DOWN:
-	//		if (!player.isDead()) {
 				this->player.moveDown();
 				this->checkEnemyCollision();
-	//		}
 			break;
 		case ' ':
-	//		if (!player.isDead())
 				this->player.shoot();
 			break;
 		case '`':
       exit(0);
-	//		this->gameOver();
 			break;
 	}
 }

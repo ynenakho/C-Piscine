@@ -31,6 +31,7 @@ class Game {
     void checkEnemy(Enemy &e);
     void checkEnemyCollision();
     void addScore();
+    void reset();
 
 };
 #endif

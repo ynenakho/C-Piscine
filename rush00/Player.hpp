@@ -12,16 +12,22 @@ class Player {
     void moveLeft();
     void moveRight();
     void display();
-    int getYLoc();
-    int getXLoc();
+    void reset();
+
+
     Player &operator= (const Player &obj);
     void shoot();
     Bullet	**getBullets() const;
     void drawBullets();
-
+    bool isDead();
+    void kill();
     void newLoc();
 
+    int getYLoc();
+    int getXLoc();
+
   private:
+    bool dead;
     bool visible;
     int xLoc, yLoc, xMax, yMax;
     char character;

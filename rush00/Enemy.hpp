@@ -8,8 +8,7 @@ class Enemy {
     Enemy &operator= (const Enemy &obj);
   	void hide();
     void move(int y, int x);
-    int getYLoc();
-    int getXLoc();
+
     void draw();
     bool getDisplay();
     bool isDead();
@@ -17,6 +16,9 @@ class Enemy {
     int getSlow();
     void kill();
     void boom();
+
+    int getYLoc();
+    int getXLoc();
 
   private:
     int boomNum;
