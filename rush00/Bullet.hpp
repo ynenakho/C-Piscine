@@ -5,9 +5,8 @@
 class Bullet {
   public:
     Bullet(int y, int x, bool direction);
-    void moveUp(int y, int x);
-    void moveDown(int y, int x);
-    static Bullet *getBullet(Bullet **bullets, int size);
+    void move(int y, int x);
+    static Bullet *getNextBullet(Bullet **bullets, int size);
     void shoot(int y, int x, bool direction);
     void hide();
     bool getDisplay();

@@ -1,34 +1,13 @@
 #include "Enemy.hpp"
 #include "Game.hpp"
 
-/*
-void Enemy::drawBullets()
-{
-	for (int i = 0; i < sizeBullets; i++)
-		//if (bullets[i]->getDisplay())
-		bullets[i]->draw();
-}
-
-// void Enemy::draw() {
-//   if (this->visible) {
-// 		int y = this->yLoc;
-// 		int x = this->xLoc;
-// 		//if (!this->dead) {
-// 			// attron(COLOR_PAIR(color));
-// 			mvwaddch(stdscr, y, x, 'A'); //show Entity character on the screen
-// 			// attroff(COLOR_PAIR(color));
-// 		//}
-// }
-// }
-
-Bullet	**Enemy::getBullets() const {
-  return this->bullets;
-}
-*/
-
-void Enemy::hide()
-{
+void Enemy::hide() {
+	this->dead = false;
+	this->boomNum = 0;
 	this->visible = false;
+	getmaxyx(stdscr, this->yMax, this->xMax);
+	this->yLoc = 1;
+	this->xLoc = 1 + rand() % (this->xMax - 2);
 }
 
 Enemy &Enemy::operator= (const Enemy &obj)
@@ -41,85 +20,83 @@ Enemy &Enemy::operator= (const Enemy &obj)
 	return (*this);
 }
 
-//Enemy::Enemy(int x, int y, int hp) : xLoc(x), yLoc(y), hp(hp), character('E')
-Enemy::Enemy()
-{
-	this->visible = true;
-	getmaxyx(stdscr, this->yMax, this->xMax);
-	this->yLoc = 1;
-	this->xLoc = 1 + rand() % (this->xMax - 1);
-	this->hp = 100;
-	this->character = 'E';
-   //bullets = new Bullet*[20];
-	//for (int i = 0; i < 20; i++)
-		//bullets[i] = new Bullet(this->yLoc, this->xLoc, true);
-    //std::cout << this->yLoc << this->xLoc << this->character << std::endl;
-}
-
-void Enemy::reset()
-{
-	this->visible = true;
-	getmaxyx(stdscr, this->yMax, this->xMax);
-	this->yLoc = 1;
-	this->xLoc = 1 + rand() % (this->xMax - 1);
-	this->hp = 100;
-	this->character = 'E';
-}
-
-void Enemy::moveDown()
-{
-	mvwaddch(stdscr, this->yLoc, this->xLoc, ' ');
-	if (this->yLoc == this->yMax - 2)
-	{
-		this->yLoc = this->yMax -2; // should be deleted at this point or hidden
-		this->hp = 0;
-		this->visible = false;
+  int Enemy::getSlow() {
+		if (this->slow > 10000)
+			this->slow = 0;
+		this->slow++;
+		return this->slow;
 	}
-	else
-  	this->yLoc++;
+
+	void Enemy::boom() {
+		if (this->boomNum == 0) {
+			mvwaddch(stdscr, this->getYLoc(), this->getXLoc(), '#');
+			this->boomNum++;
+		}
+		else if (this->boomNum == 1) {
+			mvwaddch(stdscr, this->getYLoc() - 1, this->getXLoc() -1, '\\');
+			mvwaddch(stdscr, this->getYLoc() - 1, this->getXLoc() +1, '/');
+			mvwaddch(stdscr, this->getYLoc() + 1, this->getXLoc() -1, '\\');
+			mvwaddch(stdscr, this->getYLoc() + 1, this->getXLoc() -1, '/');
+			this->boomNum++;
+		}
+		else if (this->boomNum == 2) {
+			mvwaddch(stdscr, this->getYLoc() - 2, this->getXLoc() -2, '\\');
+			mvwaddch(stdscr, this->getYLoc() - 2, this->getXLoc() +2, '/');
+			mvwaddch(stdscr, this->getYLoc() + 2, this->getXLoc() -2, '\\');
+			mvwaddch(stdscr, this->getYLoc() + 2, this->getXLoc() -2, '/');
+			this->boomNum++;
+			this->hide();
+		}
+		else {
+			mvwaddch(stdscr, this->getYLoc() - 3, this->getXLoc() -3, '*');
+			mvwaddch(stdscr, this->getYLoc() - 3, this->getXLoc() +3, '*');
+			mvwaddch(stdscr, this->getYLoc() + 3, this->getXLoc() -3, '*');
+			mvwaddch(stdscr, this->getYLoc() + 3, this->getXLoc() -3, '*');
+			this->boomNum = 0;
+			this->hide();
+		}
+	}
+
+Enemy::Enemy() {
+	this->boomNum = 0;
+	this->dead = false;
+	this->visible = false;
+	getmaxyx(stdscr, this->yMax, this->xMax);
+	this->yLoc = 1;
+	this->xLoc = 1 + rand() % (this->xMax - 2);
+	this->character = 'X';
 }
 
-/*
-void Enemy::shoot() {
-  Bullet *bullet = Bullet::getBullet(bullets, maxBullets);
-	if (bullet) {
-		bullet->shoot(this->yLoc, this->xLoc, true);
-    this->sizeBullets++;
-  }
-  }
-*/
 
-void Enemy::display()
-{
+void Enemy::move(int y, int x) {
+   this->yLoc = y;
+   this->xLoc = x;
+}
+
+bool Enemy::getDisplay() {
+  return this->visible;
+}
+
+bool Enemy::isDead() {
+	return this->dead;
+}
+
+void Enemy::draw() {
 	if (this->visible)
 		mvwaddch(stdscr, this->yLoc, this->xLoc, this->character);
 }
 
-int Enemy::getXLoc()
-{
+int Enemy::getXLoc() {
 	return this->xLoc;
 }
 
-int Enemy::getYLoc()
-{
+int Enemy::getYLoc() {
 	return this->yLoc;
 }
 
-int Enemy::gethp()
-{
-	return this->hp;
+void Enemy::setDisplay() {
+	this->visible = true;
 }
-
-void Enemy::takeDamage(int dmg)
-{
-	if (dmg > 0)
-	{
-		this-> hp -= dmg;
-		if (this->hp < 0)
-		{
-			this->hp = 0;
-			this->visible = false;
-		}
-	}
+void Enemy::kill() {
+	this->dead = true;
 }
-

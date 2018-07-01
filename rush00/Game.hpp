@@ -3,15 +3,16 @@
 # include <ncurses.h>
 # include <iostream>
 # include "Player.hpp"
-//# include "Enemie.hpp"
+# include "Enemy.hpp"
 
 class Game {
   private:
-    bool  finished;
+    bool finished;
     Player player;
-//    Enemie **enemies;
+    Enemy **enemies;
     int time;
     int spawnTimer;
+    int spawnTime;
     int fps;
     int yMax;
     int xMax;
@@ -23,6 +24,10 @@ class Game {
     void handleKey(int c);
     void drawObjects();
     void moveObjects();
-    bool checkBullet(Bullet &b);
+    void checkBullet(Bullet &b);
+    void spawnEnemy();
+    void checkEnemy(Enemy &e);
+    void checkEnemyCollision();
+
 };
 #endif

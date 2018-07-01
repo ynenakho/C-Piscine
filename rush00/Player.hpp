@@ -2,7 +2,6 @@
 # define PLAYER_HPP
 # include <ncurses.h>
 # include "Bullet.hpp"
-//# include "Game.hpp"
 
 class Player {
   public:
@@ -12,22 +11,19 @@ class Player {
     void moveDown();
     void moveLeft();
     void moveRight();
-    int getmv();
     void display();
     int getYLoc();
     int getXLoc();
     Player &operator= (const Player &obj);
     void shoot();
     Bullet	**getBullets() const;
-    void draw();
     void drawBullets();
-    int getNumBullets();
-    void setBulletsLess();
+
+    void newLoc();
 
   private:
     bool visible;
-    int sizeBullets;
-    int maxBullets;
+
     int xLoc, yLoc, xMax, yMax;
     char character;
     Bullet **bullets;

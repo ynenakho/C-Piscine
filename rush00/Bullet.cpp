@@ -1,11 +1,7 @@
 #include "Bullet.hpp"
 
 void Bullet::draw() {
-  if (this->visible) {
-		int y = this->yLoc;
-		int x = this->xLoc;
-		mvwaddch(stdscr, y, x, '*');
-  }
+		mvaddch(this->yLoc, this->xLoc, '*');
 }
 
 int Bullet::getYLoc() {
@@ -14,7 +10,6 @@ int Bullet::getYLoc() {
 int Bullet::getXLoc() {
   return this->xLoc;
 }
-
 
 bool Bullet::getDisplay() {
   return this->visible;
@@ -36,7 +31,7 @@ Bullet::Bullet(int y, int x, bool direction) {
 
 }
 
-Bullet *Bullet::getBullet(Bullet **bullets, int size) {
+Bullet *Bullet::getNextBullet(Bullet **bullets, int size) {
   for(int i = 0; i < size; i++)
   {
     if (!bullets[i]->visible)
@@ -47,16 +42,12 @@ Bullet *Bullet::getBullet(Bullet **bullets, int size) {
 
 void Bullet::shoot(int y, int x, bool direction) {
   if (direction)
-    this->moveUp(y - 1, x);
+    this->move(y - 1, x);
   else
-    this->moveDown(y + 1, x);
+    this->move(y + 1, x);
 }
 
-void Bullet::moveUp(int y, int x) {
-   this->yLoc = y;
-   this->xLoc = x;
-}
-void Bullet::moveDown(int y, int x) {
+void Bullet::move(int y, int x) {
    this->yLoc = y;
    this->xLoc = x;
 }
