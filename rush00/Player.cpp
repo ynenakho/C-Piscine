@@ -78,7 +78,12 @@ void Player::shoot() {
 }
 
 void Player::display() {
+
+
+
+ attron(COLOR_PAIR(1));
   mvwaddch(stdscr, this->yLoc, this->xLoc, this->character);
+	attroff(COLOR_PAIR(1));
 }
 
 int Player::getXLoc() {

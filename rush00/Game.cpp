@@ -116,7 +116,6 @@ void Game::draw() {
   clear();
   box(stdscr, 0, 0);
 
-
 	mvprintw(this->yMax - 1, 1, "TIME: %0.2d:%0.2d", this->time / 60, this->time%60);
 	mvprintw(this->yMax - 1, 15, "SCORE: %d", this->score);
 	mvprintw(this->yMax - 1, 28, "LIVES: %d", this->lifes);
@@ -149,6 +148,11 @@ void Game::start()
 	clock_t before = clock();
 	clock_t now;
   keypad(stdscr, true);
+	start_color();
+	 init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	  init_pair(2, COLOR_RED, COLOR_BLACK);
+		init_pair(3, COLOR_BLUE, COLOR_BLACK);
+		init_pair(4, COLOR_YELLOW, COLOR_BLACK);
 	while (!this->player.isDead())
 	{
 		if ((c = getch()) != ERR)
@@ -166,18 +170,23 @@ void Game::start()
 			nodelay(stdscr, false);
 			clear();
 			box(stdscr, 0, 0);
+
+	    attron(COLOR_PAIR(1));
 			mvprintw(this->yMax / 2 - 4, this->xMax / 2 - 7, "GAME OVER!!!!");
+			attroff(COLOR_PAIR(1));
+			attron(COLOR_PAIR(2));
 			mvprintw(this->yMax / 2 - 2, this->xMax / 2 - 10, "Your score is: %d", this->score);
 			mvprintw(this->yMax / 2, this->xMax / 2 - 5, "New Game?", this->score);
 			mvprintw(this->yMax / 2 + 2, this->xMax / 2 - 9, "[ Y ]  or  [ N ]");
+			attron(COLOR_PAIR(2));
 			refresh();
-			while ((c = getch()) != 'y' && (c != 'n')) {}
+			while ((c = getch()) != 'y' && (c != 'n')  && (c != 'q')) {}
 			if (c == 'y') {
 				this->reset();
 				this->player.reset();
 				nodelay(stdscr, true);
 			}
-			else if (c == 'n' || c == '`')
+			else if (c == 'n' || c == 'q')
 				exit(0);
 
 		}
@@ -208,7 +217,7 @@ void    Game::handleKey(int c) {
 		case ' ':
 				this->player.shoot();
 			break;
-		case '`':
+		case 'q':
       exit(0);
 			break;
 	}
