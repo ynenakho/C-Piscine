@@ -23,7 +23,6 @@ class Player {
 
   private:
     bool visible;
-
     int xLoc, yLoc, xMax, yMax;
     char character;
     Bullet **bullets;

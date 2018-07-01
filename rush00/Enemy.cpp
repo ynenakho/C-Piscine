@@ -45,7 +45,6 @@ Enemy &Enemy::operator= (const Enemy &obj)
 			mvwaddch(stdscr, this->getYLoc() + 2, this->getXLoc() -2, '\\');
 			mvwaddch(stdscr, this->getYLoc() + 2, this->getXLoc() -2, '/');
 			this->boomNum++;
-			this->hide();
 		}
 		else {
 			mvwaddch(stdscr, this->getYLoc() - 3, this->getXLoc() -3, '*');

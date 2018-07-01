@@ -18,13 +18,17 @@ Game::Game() {
   std::srand(std::time(0));
   getmaxyx(stdscr, this->yMax, this->xMax);
   this->finished = false;
-	this->fps = 60;
 	this->time = 0;
 	this->spawnTimer = 0;
-  this->player.display();
   this->enemies = new Enemy*[20];
+  this->score = 0;
+  this->lifes = 3;
    for (int i = 0; i < 20; i++)
      this->enemies[i] = new Enemy;
+}
+
+void Game::addScore() {
+  this->score += 25;
 }
 
 void Game::checkBullet(Bullet &b) {
@@ -38,6 +42,7 @@ void Game::checkBullet(Bullet &b) {
           if (bullets[j]->getYLoc() == this->enemies[i]->getYLoc()) {
             this->enemies[i]->kill();
             bullets[j]->hide();
+            addScore();
           }
         }
       }
@@ -52,6 +57,10 @@ void Game::checkEnemyCollision() {
     && this->enemies[i]->getYLoc() == this->player.getYLoc()) {
       this->enemies[i]->kill();
       this->player.newLoc();
+      if (--this->lifes == 0) {
+        this->finished = true;
+      }
+
     }
   }
 }
@@ -62,6 +71,9 @@ void Game::checkEnemy(Enemy &e) {
   else if (e.getYLoc() == this->player.getYLoc() && e.getXLoc() == this->player.getXLoc()) {
     e.boom();
     this->player.newLoc();
+    if (--this->lifes == 0) {
+      this->finished = true;
+    }
     e.hide();
   }
 }
@@ -89,11 +101,10 @@ void Game::draw() {
   clear();
   box(stdscr, 0, 0);
 
-  // mvprintw(this->rows - 1, 5, "FPS: %d", this->fps);
-	// mvprintw(this->rows - 1, 29, "TIME: %0.2d:%0.2d", this->time / 60, this->time%60);
-	// mvprintw(this->rows - 1, 17, "NEXT: %d", this->spawnTime - this->spawnTimer);
-	// mvprintw(this->rows - 1, 45, "SCORE: %d", this->score);
-	// mvprintw(this->rows - 1, 60, "LIVES: %d", this->player.getLives());
+
+	mvprintw(this->yMax - 1, 1, "TIME: %0.2d:%0.2d", this->time / 60, this->time%60);
+	mvprintw(this->yMax - 1, 15, "SCORE: %d", this->score);
+	mvprintw(this->yMax - 1, 26, "LIVES: %d", this->lifes);
 
   this->player.display();
   this->moveObjects();
@@ -117,9 +128,7 @@ void	Game::spawnEnemy() {
 
 void Game::start()
 {
-  this->draw();
 	int c;
-	int frames = 0;
   this->spawnTime = rand() % 3;
 	clock_t before = clock();
 	clock_t now;
@@ -131,14 +140,11 @@ void Game::start()
 	 	this->draw();
     this->spawnEnemy();
 	 	now = clock();
-		frames++;
 		if (((now - before) / CLOCKS_PER_SEC) == 1) // 1 second elapsed
 		{
 			this->time++;
 			this->spawnTimer++;
 			before = now;
-			this->fps = frames;
-			frames = 0;
     }
 	// 	// WAIT FOR REST OF 1/60th OF SECOND (or 1/fps'th of a second)
     while(clock() * 60 / CLOCKS_PER_SEC == now * 60 / CLOCKS_PER_SEC) {}

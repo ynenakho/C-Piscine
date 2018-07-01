@@ -13,9 +13,11 @@ class Game {
     int time;
     int spawnTimer;
     int spawnTime;
-    int fps;
     int yMax;
     int xMax;
+    int score;
+    int lifes;
+  //  WINDOW *win;
 
   public:
     Game();
@@ -28,6 +30,7 @@ class Game {
     void spawnEnemy();
     void checkEnemy(Enemy &e);
     void checkEnemyCollision();
+    void addScore();
 
 };
 #endif
