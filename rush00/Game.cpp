@@ -8,7 +8,7 @@ void Game::reset() {
 	this->spawnTimer = 0;
 	this->enemies = new Enemy*[20];
 	this->score = 0;
-	this->lifes = 1;
+	this->lifes = 3;
 	 for (int i = 0; i < 20; i++)
 		 this->enemies[i] = new Enemy;
 }
@@ -34,13 +34,13 @@ Game::Game() {
 	this->spawnTimer = 0;
   this->enemies = new Enemy*[20];
   this->score = 0;
-  this->lifes = 1;
+  this->lifes = 3;
    for (int i = 0; i < 20; i++)
      this->enemies[i] = new Enemy;
 }
 
 void Game::addScore() {
-  this->score += 25;
+  this->score += 10;
 }
 
 void Game::checkBullet(Bullet &b) {
@@ -54,7 +54,8 @@ void Game::checkBullet(Bullet &b) {
           if (bullets[j]->getYLoc() == this->enemies[i]->getYLoc()) {
             this->enemies[i]->kill();
             bullets[j]->hide();
-            addScore();
+						if (this->enemies[i]->isDead())
+            	addScore();
           }
         }
       }
@@ -119,6 +120,7 @@ void Game::draw() {
 	mvprintw(this->yMax - 1, 1, "TIME: %0.2d:%0.2d", this->time / 60, this->time%60);
 	mvprintw(this->yMax - 1, 15, "SCORE: %d", this->score);
 	mvprintw(this->yMax - 1, 28, "LIVES: %d", this->lifes);
+	mvprintw(this->yMax - 1, 38, "QUIT: [ Q ]");
 
   this->player.display();
   this->moveObjects();
