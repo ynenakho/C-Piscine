@@ -1,12 +1,15 @@
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
-# include <ncurses.h>
 # include "Bullet.hpp"
+# include "GameEntity.hpp"
 
-class Player {
+class Player : public GameEntity{
   public:
     Player();
-    void hide();
+	Player(Player const & src);
+	~Player();
+    Player &operator= (const Player &obj);
+
     void moveUp();
     void moveDown();
     void moveLeft();
@@ -14,8 +17,6 @@ class Player {
     void display();
     void reset();
 
-
-    Player &operator= (const Player &obj);
     void shoot();
     Bullet	**getBullets() const;
     void drawBullets();
@@ -23,14 +24,8 @@ class Player {
     void kill();
     void newLoc();
 
-    int getYLoc();
-    int getXLoc();
-
   private:
     bool dead;
-    bool visible;
-    int xLoc, yLoc, xMax, yMax;
-    char character;
     Bullet **bullets;
 };
 #endif

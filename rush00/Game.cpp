@@ -1,6 +1,41 @@
 #include "Game.hpp"
 #include "Enemy.hpp"
 
+Game::Game() {
+  std::srand(std::time(0));
+  getmaxyx(stdscr, this->yMax, this->xMax);
+  this->finished = false;
+	this->time = 0;
+	this->spawnTimer = 0;
+  this->enemies = new Enemy*[20];
+  this->score = 0;
+  this->lifes = 3;
+   for (int i = 0; i < 20; i++)
+     this->enemies[i] = new Enemy;
+}
+
+Game::~Game() {
+	delete [] this->enemies;
+}
+
+Game::Game(Game const & src) {
+	*this = src;
+}
+
+Game &Game::operator=(const Game &obj) {
+	this->finished = obj.finished;
+	this->player = obj.player;
+	this->enemies = obj.enemies;
+	this->time = obj.time;
+	this->spawnTimer = obj.spawnTimer;
+	this->spawnTime = obj.spawnTime;
+	this->yMax = obj.yMax;
+	this->xMax = obj.xMax;
+	this->score = obj.score;
+	this->lifes = obj.lifes;
+	return (*this);
+}
+
 void Game::reset() {
 	getmaxyx(stdscr, this->yMax, this->xMax);
 	this->finished = false;
@@ -24,19 +59,6 @@ void Game::drawObjects() {
         this->enemies[i]->draw();
     }
   }
-}
-
-Game::Game() {
-  std::srand(std::time(0));
-  getmaxyx(stdscr, this->yMax, this->xMax);
-  this->finished = false;
-	this->time = 0;
-	this->spawnTimer = 0;
-  this->enemies = new Enemy*[20];
-  this->score = 0;
-  this->lifes = 3;
-   for (int i = 0; i < 20; i++)
-     this->enemies[i] = new Enemy;
 }
 
 void Game::addScore() {

@@ -1,14 +1,33 @@
 #include "Bullet.hpp"
 
-void Bullet::draw() {
-		mvaddch(this->yLoc, this->xLoc, '*');
+Bullet::Bullet(int y, int x, bool direction) : GameEntity('*'){
+  this->visible = false;
+  this->yLoc = y;
+  this->xLoc = x;
+  this->direction = direction;
 }
 
-int Bullet::getYLoc() {
-  return this->yLoc;
+Bullet::~Bullet() {
 }
-int Bullet::getXLoc() {
-  return this->xLoc;
+
+Bullet::Bullet(Bullet const & src) : GameEntity(src) {
+	*this = src;
+}
+
+Bullet &Bullet::operator=(const Bullet &obj)
+{
+	this->visible = obj.visible;
+	this->xLoc = obj.xLoc;
+	this->yLoc = obj.yLoc;
+	this->yMax = obj.yMax;
+	this->xMax = obj.xMax;
+	this->character = obj.character;
+	this->direction = obj.direction;
+	return (*this);
+}
+
+void Bullet::draw() {
+		mvaddch(this->yLoc, this->xLoc, '*');
 }
 
 bool Bullet::getDisplay() {
@@ -23,13 +42,6 @@ void Bullet::hide() {
 	this->visible = false;
 }
 
-Bullet::Bullet(int y, int x, bool direction) {
-  this->visible = false;
-  this->yLoc = y;
-  this->xLoc = x;
-  this->direction = direction;
-
-}
 
 Bullet *Bullet::getNextBullet(Bullet **bullets, int size) {
   for(int i = 0; i < size; i++)

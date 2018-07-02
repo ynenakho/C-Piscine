@@ -1,6 +1,33 @@
 #include "Player.hpp"
 #include "Game.hpp"
 
+Player::Player() : GameEntity('A'){
+  this->bullets = new Bullet*[20];
+  for (int i = 0; i < 20; i++)
+	 this->bullets[i] = new Bullet(this->yLoc, this->xLoc, true);
+  this->visible = true;
+}
+
+Player::~Player() {
+	delete [] this->bullets;
+}
+
+Player::Player(Player const & src) : GameEntity(src) {
+	*this = src;
+}
+
+Player &Player::operator= (const Player &obj) {
+  this->visible = obj.visible;
+  this->xLoc = obj.xLoc;
+  this->yLoc = obj.yLoc;
+  this->yMax = obj.yMax;
+  this->xMax = obj.xMax;
+  this->character = obj.character;
+  this->dead = obj.dead;
+  this->bullets = obj.bullets;
+  return (*this);
+}
+
 void Player::kill() {
 	this->dead = true;
 }
@@ -25,33 +52,12 @@ Bullet	**Player::getBullets() const {
   return this->bullets;
 }
 
-void Player::hide() {
-	this->visible = false;
-}
-
-Player &Player::operator= (const Player &obj) {
-  this->xLoc = obj.xLoc;
-  this->yLoc = obj.yLoc;
-  this->yMax = obj.yMax;
-  this->xMax = obj.xMax;
-  this->character = obj.character;
-  return (*this);
-}
   void Player::newLoc() {
     getmaxyx(stdscr, this->yMax, this->xMax);
     this->xLoc = this->xMax / 2;
     this->yLoc = this->yMax - 3;
   }
 
-Player::Player() {
-  getmaxyx(stdscr, this->yMax, this->xMax);
-  this->xLoc = this->xMax / 2;
-  this->yLoc = this->yMax - 3;
-  this->character = 'A';
-  this->bullets = new Bullet*[20];
-  for (int i = 0; i < 20; i++)
-	 this->bullets[i] = new Bullet(this->yLoc, this->xLoc, true);
-}
 
 void Player::moveUp() {
   this->yLoc = (this->yLoc == this->yMax / 2) ? this->yMax / 2 : this->yLoc - 1;
@@ -84,12 +90,4 @@ void Player::display() {
  attron(COLOR_PAIR(1));
   mvwaddch(stdscr, this->yLoc, this->xLoc, this->character);
 	attroff(COLOR_PAIR(1));
-}
-
-int Player::getXLoc() {
-  return this->xLoc;
-}
-
-int Player::getYLoc() {
-  return this->yLoc;
 }

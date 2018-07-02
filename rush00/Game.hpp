@@ -21,6 +21,10 @@ class Game {
 
   public:
     Game();
+    Game(Game const & src);
+    ~Game();
+    Game &operator=(const Game & obj);
+
     void start();
     void draw();
     void handleKey(int c);

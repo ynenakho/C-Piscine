@@ -1,10 +1,14 @@
 #ifndef BULLET_HPP
 # define BULLET_HPP
-# include <ncurses.h>
+# include "GameEntity.hpp"
 
-class Bullet {
+class Bullet : public GameEntity{
   public:
     Bullet(int y, int x, bool direction);
+	Bullet(Bullet const & src);
+	~Bullet();
+	Bullet &operator=(const Bullet &obj);
+
     void move(int y, int x);
     static Bullet *getNextBullet(Bullet **bullets, int size);
     void shoot(int y, int x, bool direction);
@@ -13,13 +17,7 @@ class Bullet {
     void draw();
     void show();
 
-    int getYLoc();
-    int getXLoc();
-
   private:
-    bool visible;
     bool direction;
-    int yLoc;
-    int xLoc;
 };
 #endif
