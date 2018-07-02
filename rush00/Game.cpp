@@ -162,7 +162,7 @@ void	Game::spawnEnemy() {
     this->enemies[i]->setDisplay();
 	}
 }
-
+#include <unistd.h>
 void Game::start()
 {
 	int c;
@@ -192,7 +192,6 @@ void Game::start()
 			nodelay(stdscr, false);
 			clear();
 			box(stdscr, 0, 0);
-
 	    attron(COLOR_PAIR(1));
 			mvprintw(this->yMax / 2 - 4, this->xMax / 2 - 7, "GAME OVER!!!!");
 			attroff(COLOR_PAIR(1));
@@ -212,9 +211,8 @@ void Game::start()
 				exit(0);
 
 		}
-
 	// 	// WAIT FOR REST OF 1/60th OF SECOND (or 1/fps'th of a second)
-    while(clock() * 60 / CLOCKS_PER_SEC == now * 60 / CLOCKS_PER_SEC) {}
+    	while(clock() * 60 / CLOCKS_PER_SEC == now * 60 / CLOCKS_PER_SEC) {}
 	  }
 }
 

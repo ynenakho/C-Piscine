@@ -6,8 +6,8 @@
 class Player : public GameEntity{
   public:
     Player();
-	Player(Player const & src);
-	~Player();
+	  Player(Player const & src);
+	  ~Player();
     Player &operator= (const Player &obj);
 
     void moveUp();
@@ -16,9 +16,8 @@ class Player : public GameEntity{
     void moveRight();
     void display();
     void reset();
-
     void shoot();
-    Bullet	**getBullets() const;
+    Bullet **getBullets() const;
     void drawBullets();
     bool isDead();
     void kill();

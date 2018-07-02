@@ -2,16 +2,16 @@
 # define ENEMY_HPP
 # include "GameEntity.hpp"
 
-class Enemy : public GameEntity{ 
+class Enemy : public GameEntity{
   public:
     Enemy();
-	Enemy(Enemy const & src);
-	~Enemy();
+	  Enemy(Enemy const & src);
+	  ~Enemy();
     Enemy &operator= (const Enemy &obj);
 
   	void hide();
     void move(int y, int x);
-	void draw();
+	  void draw();
     bool getDisplay();
     bool isDead();
     void setDisplay();
