@@ -3,8 +3,6 @@
 # include <iostream>
 # include <stdexcept>
 
-
-
 class Bureaucrat {
   private:
     std::string const name;
@@ -14,14 +12,14 @@ class Bureaucrat {
     class GradeTooHighException : public std::exception {
      public:
        virtual const char* what() const throw() {
-         return ("Grade is too high. Grade set to 1");
+         return ("Grade is too high.");
        }
     };
 
     class GradeTooLowException : public std::exception {
      public:
        virtual const char* what() const throw() {
-         return ("Grade is too low. Grade set to 150");
+         return ("Grade is too low.");
        }
     };
     Bureaucrat &operator= (const Bureaucrat &obj);

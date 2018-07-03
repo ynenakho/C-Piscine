@@ -1,20 +1,32 @@
 #include "Bureaucrat.hpp"
 
-int main() {
-  Bureaucrat b1("John", 160);
-  Bureaucrat b2("Andy", -1);
-  std::cout << b1 << std::endl;
-  std::cout << b2 << std::endl;
-  b1.decrementGrade();
-  b2.incrementGrade();
-  b2.decrementGrade();
-  b1.incrementGrade();
-  b2.decrementGrade();
-  b1.incrementGrade();
-  std::cout << b1 << std::endl;
-  std::cout << b2 << std::endl;
-  Bureaucrat b3("Vasya", 100);
-  std::cout << b3 << std::endl;
-  return 0;
 
+int
+main(void)
+{
+  try
+  {
+  //      Bureaucrat bur3("Rob", 0);
+    Bureaucrat bur2("Bob", 149);
+    std::cout << bur2 << std::endl;
+    bur2.incrementGrade();
+    std::cout << bur2 << std::endl;
+    bur2.decrementGrade();
+    std::cout << bur2 << std::endl;
+    bur2.decrementGrade();
+    std::cout << bur2 << std::endl;
+    bur2.decrementGrade();
+    std::cout << bur2 << std::endl;
+//    Bureaucrat bur3("Rob", 0);
+    // Bureaucrat bur("Kob", 156);
+    // std::cout << bur << std::endl;
+    Bureaucrat bur3("Rob", 0);
+    std::cout << bur3 << std::endl;
+
+  }
+  catch (std::exception &e)
+  {
+      std::cout << e.what() << std::endl;
+  }
+  return (0);
 }
