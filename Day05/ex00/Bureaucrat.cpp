@@ -1,5 +1,10 @@
 #include "Bureaucrat.hpp"
 
+Bureaucrat::Bureaucrat(const Bureaucrat &src) {
+    *this = src;
+    return ;
+}
+
 std::ostream &operator<< (std::ostream &res, const Bureaucrat &obj) {
   res << "<" << obj.getName() << ">, bureaucrat grade <" << obj.getGrade() << ">.";
   return res;

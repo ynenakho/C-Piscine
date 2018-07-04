@@ -6,6 +6,7 @@ Form &Form::operator= (const Form &rhs) {
 }
 
 Form::Form(const Form &src) :
+    target(src.getTarget()),
     name(src.getName()),
     signInGrade(src.getSignInGrade()),
     excecuteGrade(src.getExcecuteGrade()),
@@ -14,8 +15,15 @@ Form::Form(const Form &src) :
     return ;
 }
 
-Form::Form(std::string const name, const int signInGrade, const int excecuteGrade):
-    name(name), signInGrade(signInGrade), excecuteGrade(excecuteGrade) {
+void Form::execute(Bureaucrat const & executor) const {
+    if (!this->getSignedIn())
+      throw Form::FormIsNotSigned();
+    else if (executor.getGrade() > this->getExcecuteGrade())
+      throw Form::GradeTooLowException();
+}
+
+Form::Form(std::string const target, std::string const name, const int signInGrade, const int excecuteGrade):
+    target(target), name(name), signInGrade(signInGrade), excecuteGrade(excecuteGrade), signedIn(false) {
   if (signInGrade < 1 || excecuteGrade < 1)
     throw Form::GradeTooHighException();
   else if (signInGrade > 150 || excecuteGrade > 150)
@@ -49,6 +57,10 @@ int Form::getSignInGrade() const {
 
 int Form::getExcecuteGrade() const {
   return this->excecuteGrade;
+}
+
+std::string Form::getTarget() const {
+  return this->target;
 }
 
 Form::~Form() {}

@@ -5,6 +5,17 @@ Bureaucrat::Bureaucrat(const Bureaucrat &src) {
     return ;
 }
 
+void Bureaucrat::executeForm(Form const & form) {
+  try {
+    form.execute(*this);
+    std::cout << this->getName() << " executes " << form.getName() << std::endl;
+  }
+  catch (std::exception& e) {
+    std::cout << this->name << " cannot execute " << form.getName()
+                            << " because " << e.what() << std::endl;
+  }
+}
+
 void Bureaucrat::signForm(Form &obj) {
   try {
     obj.beSigned(*this);

@@ -25,9 +25,13 @@ class Bureaucrat {
          return ("Grade is too low.");
        }
     };
-    Bureaucrat &operator= (const Bureaucrat &obj);
+
     Bureaucrat(std::string name = "Default", int grade = 150);
+    Bureaucrat(const Bureaucrat &src);
     ~Bureaucrat();
+
+    Bureaucrat &operator= (const Bureaucrat &obj);
+
     std::string getName() const;
     int getGrade() const;
     void incrementGrade();

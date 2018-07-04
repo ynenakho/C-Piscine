@@ -2,6 +2,9 @@
 # define BUREAUCRAT_HPP
 # include <iostream>
 # include <stdexcept>
+# include "Form.hpp"
+
+class Form;
 
 class Bureaucrat {
   private:
@@ -25,14 +28,16 @@ class Bureaucrat {
 
     Bureaucrat(std::string name = "Default", int grade = 150);
     Bureaucrat(const Bureaucrat &src);
+    ~Bureaucrat();
 
     Bureaucrat &operator= (const Bureaucrat &obj);
 
-    ~Bureaucrat();
     std::string getName() const;
     int getGrade() const;
     void incrementGrade();
     void decrementGrade();
+    void signForm(Form & obj);
+    void executeForm(Form const & form);
 };
 
 std::ostream &operator<< (std::ostream &res, const Bureaucrat &obj);
